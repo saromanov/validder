@@ -40,7 +40,22 @@ class Validder(object):
 		if isinstance(schema, dict) is False:
 			raise Exception("Unable to validate schema")
 
+		# Counting required arguments
+		required = []
+		for key, value in schema.items():
+			if 'required' in value:
+				item = value['required']
+				if item: required.append(item)
+
 		for key, value in schema.items():
 			if key not in self.input_schema:
 				raise Exception("{0} is not exist at the input schema".format(key))
 			properties = self.input_schema[key]
+			value = self._check_type(properties)
+			# at the last, check that elements is on required
+			if key in required:
+				required.remove(key)
+
+		# checking, that required is empty
+		if len(required) > 0:
+			raise Exception("Required elements {0} is not exist".format(required))
