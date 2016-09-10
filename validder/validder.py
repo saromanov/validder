@@ -35,6 +35,13 @@ class Validder(object):
 		'''
 		if typeItem == "string":
 			return True if isinstance(key, string) else False
+		if typeItem == "int":
+			return True if isinstance(key, int) else False
+		if typeItem == "float":
+			return True if isinstance(key, float) else False
+		if typeItem == "list":
+			return True if isinstance(key, list) else False
+		return False
 
 
 	def _check_properties(self, key, value):
