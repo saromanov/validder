@@ -30,6 +30,12 @@ class Validder(object):
 		current_type = properties["type"]
 		return True if current_type in allowed_types else False
 
+	def _check_type_value(self, typeItem, value):
+		''' return True if value satisfied key properties
+		'''
+		if typeItem == "string":
+			return True if isinstance(key, string) else False
+
 
 	def _check_properties(self, key, value):
 		properties = self.input_schema[key]
