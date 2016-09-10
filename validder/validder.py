@@ -26,6 +26,8 @@ class Validder(object):
 		''' checking type of the input value.
 		Allowed types: string, list, int, float, any
 		'''
+		if 'type' not in properties:
+			return True
 		allowed_types = ["string", "int", "float", "list"]
 		current_type = properties["type"]
 		if not current_type in allowed_types: return False
@@ -48,6 +50,19 @@ class Validder(object):
 			return True
 		return False
 
+	def _check_allow(self, input_schema, values):
+		''' return True if elements at the input schema
+			exist at the values
+		'''
+		print(input_schema)
+		if 'allow' not in input_schema:
+			return True
+		input_items = input_schema['allow']
+		for iter_values in values:
+			if iter_values not in input_items:
+				return False
+		return True
+
 
 	def _check_properties(self, key, value):
 		properties = self.input_schema[key]
@@ -60,7 +75,7 @@ class Validder(object):
 
 		# Counting required arguments
 		required = []
-		for key, value in schema.items():
+		for key, value in self.input_schema.items():
 			if 'required' in value:
 				item = value['required']
 				if item: required.append(item)
@@ -69,8 +84,9 @@ class Validder(object):
 			if key not in self.input_schema:
 				raise Exception("{0} is not exist at the input schema".format(key))
 			properties = self.input_schema[key]
-			value = self._check_type(properties, key, value)
-			if value is False:
+			if self._check_type(properties, key, value) is False:
+				return False
+			if self._check_allow(properties, value) is False:
 				return False
 			# at the last, check that elements is on required
 			if key in required:
