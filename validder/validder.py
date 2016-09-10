@@ -65,6 +65,7 @@ class Validder(object):
 				raise Exception("{0} is not exist at the input schema".format(key))
 			properties = self.input_schema[key]
 			value = self._check_type(properties)
+			type_value = self._check_type_value(key, value)
 			# at the last, check that elements is on required
 			if key in required:
 				required.remove(key)
