@@ -17,7 +17,7 @@ class Validder(object):
 
 		# Check, if all of the types its a strings
 		for key, value in schema.items():
-			if isinstance(key, string) is False:
+			if isinstance(key, str) is False:
 				return False
 
 		return True
@@ -34,7 +34,7 @@ class Validder(object):
 		''' return True if value satisfied key properties
 		'''
 		if typeItem == "string":
-			return True if isinstance(key, string) else False
+			return True if isinstance(key, str) else False
 		if typeItem == "int":
 			return True if isinstance(key, int) else False
 		if typeItem == "float":
