@@ -41,6 +41,8 @@ class Validder(object):
 			return True if isinstance(key, float) else False
 		if typeItem == "list":
 			return True if isinstance(key, list) else False
+		if typeItem == "any":
+			return True
 		return False
 
 
