@@ -63,6 +63,15 @@ class Validder(object):
 				return False
 		return True
 
+	def _check_size(self, input_schema, values):
+		''' return True if size of the input list is equal to
+			size at the input definitions
+		'''
+		if 'size' not in input_schema:
+			return True
+		size = input_schema['size']
+		return False if len(values) != size else True
+
 
 	def _check_properties(self, key, value):
 		properties = self.input_schema[key]
@@ -87,6 +96,8 @@ class Validder(object):
 			if self._check_type(properties, key, value) is False:
 				return False
 			if self._check_allow(properties, value) is False:
+				return False
+			if self._check_size(properties, value) is False:
 				return False
 			# at the last, check that elements is on required
 			if key in required:
